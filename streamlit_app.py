@@ -2,11 +2,7 @@ import streamlit as st
 
 st.title('🎈 App Name')
 
-st.write('Haiendo un ligero cambio world!')
-
-
-st.write('Haiendo un ligero cambio world!')
-
+st.write('Haiendo u ligero camb')
 
 # Vamos a hacer el perceptron 
 
