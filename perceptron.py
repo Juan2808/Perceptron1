@@ -1,18 +1,32 @@
-x1 = float(input("ingrese el primer valor: "))
+import streamlit as st
+import numpy as np
 
-x2 = float(input("ingrese el segundo valor: "))
+st.set_page_config(page_title="Perceptrón demo", page_icon="🤖", layout="wide")
 
-w1 = 0.5 #---> colocamos los valores para el and gate 
-w2 = 0.5 
+st.title("Perceptrón sencillo")
+st.write("Ingrese los valores de las entradas,pesos y del sesgo del perceptron")
 
-b = 0.1 # inicializamos el bias 
+# ──‒ Layout: dos columnas (60 % – 40 %) ‒──
+left, right = st.columns([3, 2])
 
-y = x1*w1 + x2*w2 + b 
+with left:
+    st.subheader("🔢 Entradas")
+    x1 = st.number_input("x₁", value=0.0, step=1.0, key="x1")
+    x2 = st.number_input("x₂", value=0.0, step=1.0, key="x2")
+    w1 = st.number_input("w₁ (peso de x₁)", value=1.0, step=0.1, key="w1")
+    w2 = st.number_input("w₂ (peso de x₂)", value=1.0, step=0.1, key="w2")
+    bias = st.number_input("bias / umbral b", value=0.0, step=0.1, key="b")
 
-# programamos un binary step function con el step en 1 
+    calcular = st.button("Calcular")
 
-if y >1: y = 1 
+with right:
+    st.subheader("⚙️  Salida")
+    if calcular:
+        # perceptrón: y = f(w·x + b), con f = unidad escalón
+        z = np.dot([w1, w2], [x1, x2]) + bias
+        y = 1 if z >= 0 else 0
+        st.metric("Resultado ŷ", y)
+        st.caption(f"z = {z:.2f}  →  y = {y}")
+    else:
+        st.info("Introduce valores y pulsa **Calcular**")
 
-else:  y =0 
-
-print(y)
